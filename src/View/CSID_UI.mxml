@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955" minHeight="600" viewSourceURL="srcview/index.html"
+			   creationComplete="application1_creationCompleteHandler()" >
+	
+	
+		<fx:Script>
+		import mx.collections.ArrayCollection;
+		import mx.controls.Alert;
+			
+			[Bindable]
+			var CurrentDateTime:Date = new Date();
+	
+		[Bindable]
+		private var medalsAC:ArrayCollection = new ArrayCollection( [{ Gold:20,Time: "12:00"},
+			{ Gold: 50,Time: "13:00" },
+			{  Gold: 32 ,Time: "14:00"},
+			{Gold: 27,Time: "15:00" },{ Gold: 12,Time: "16:00" },{ Gold: 18,Time: "17.00" },{Gold: 30,Time: "18:00"},{Gold: 14,Time: "19:00"},
+			{Gold: 8,Time: "20:00"},{Gold: 30,Time: "21:00"},{Gold: 13,Time: "22:00"},{Gold: 19,Time: "23:00"}
+		]);
+		
+		private function application1_creationCompleteHandler():void
+		{		
+			selection.text = CurrentDateTime.toDateString();	
+			dateField1.text= CurrentDateTime.toDateString();			
+		}
+		
+			private function QuicktimeRangesYesterday():void
+			{			
+				var yesterday:Date = new Date((CurrentDateTime.time - ( 1 * 24 * 60 * 60 * 1000 )));			
+				selection.text = yesterday.toDateString();	
+				dateField1.text= yesterday.toDateString();			
+			}
+				
+			private function QuicktimeRangesThisWeek():void
+			{			
+				
+				var currentDate = CurrentDateTime.date; 
+				var currentMonth = CurrentDateTime.month; 
+				var currentYear = CurrentDateTime.fullYear;  
+				var lastWeek:Date = new Date(currentYear, currentMonth, currentDate  - 7); 
+				selection.text = lastWeek.toDateString()+"-"+CurrentDateTime.toDateString();	
+				dateField1.text= lastWeek.toDateString();		
+				
+			}
+			
+			private function QuicktimeRangesThisMonth():void
+			{			
+				var currentDate = CurrentDateTime.date; 
+				var currentMonth = CurrentDateTime.month; 
+				var currentYear = CurrentDateTime.fullYear;  
+				var lastMonth:Date = new Date(currentYear, currentMonth-1, currentDate); 
+				selection.text = lastMonth.toDateString()+"-"+CurrentDateTime.toDateString();	
+				dateField1.text= lastMonth.toDateString();		
+			}
+			
+			private function QuicktimeRanges3Months():void
+			{			
+				var currentDate = CurrentDateTime.date; 
+				var currentMonth = CurrentDateTime.month; 
+				var currentYear = CurrentDateTime.fullYear;  
+				var last3Month:Date = new Date(currentYear, currentMonth-3, currentDate); 
+				selection.text = last3Month.toDateString()+"-"+CurrentDateTime.toDateString();	
+				dateField1.text= last3Month.toDateString();			
+			}
+			
+			private function QuicktimeRanges6Months():void
+			{			
+				var currentDate = CurrentDateTime.date; 
+				var currentMonth = CurrentDateTime.month; 
+				var currentYear = CurrentDateTime.fullYear;  
+				var last6Month:Date = new Date(currentYear, currentMonth-6, currentDate); 
+				selection.text = last6Month.toDateString()+"-"+CurrentDateTime.toDateString();	
+				dateField1.text= last6Month.toDateString();		
+			}
+		  
+			private function Subscribers():void
+			{			
+				var url:String= "http://localhost:8082/CSID_Servlet/CSID_Servlet";
+				Alert.show(url);
+				
+			}
+			
+			
+		private function dateChanged(date:Date):void {
+			
+			var CurrentDateTime:Date = new Date();
+			if (date == null)
+				selection.text = CurrentDateTime.toDateString() ;                
+			else
+				selection.text = date.toDateString();
+
+		}
+			/*public function callService (str : String) : void
+			{
+			var httpService : HTTPService = new HTTPService();
+			httpService.url = " url";
+			httpService.addEventListener(ResultEvent.RESULT , result);
+			httpService.addEventListener(FaultEvent.FAULT , fault);
+			httpService.showBusyCursor = true;
+			//Alert.show(httpService.url.toString());
+			httpService.send();
+			}
+			
+			public function result(data:Object):void
+			{
+			facade.sendNotification(ApplicationFacade.DEVICE_DATA_LOADED , data.result);
+			}
+			
+			public function fault(data:Object):void
+			{
+			Alert.show("XML parsing Error");
+			}
+			*/
+			
+	</fx:Script>
+	<mx:VBox width="100%" height="100%" paddingTop="5" verticalGap="0">
+		<mx:HBox width="100%" height="30" verticalAlign="middle">
+			<s:Label text="Subscriber Analytics" fontSize="24"/>
+			<mx:HBox paddingLeft="580" height="100%" width="100%">
+				<mx:Text id="selection" color="black" fontSize="20" fontWeight="bold"/>
+			</mx:HBox>
+			
+		</mx:HBox>
+		<mx:HRule width="100%" height="1"/>
+		
+		<mx:HBox width="100%" height="30" verticalAlign="middle">
+			
+			<mx:HBox paddingLeft="800" paddingRight="10" width="100%" height = "30" verticalAlign="top">
+				<mx:LinkButton  label="6 Months" fontSize="12" color="black" fontWeight="normal" click="QuicktimeRanges6Months()"/>
+				<mx:LinkButton  label="3 Months" fontSize="12" color="black" fontWeight="normal" click="QuicktimeRanges3Months()"/>
+				<mx:LinkButton  label="This Month" fontSize="12" color="black" fontWeight="normal" click="QuicktimeRangesThisMonth()"/>
+				<mx:LinkButton  label="This Week" fontSize="12" color="black" fontWeight="normal" click="QuicktimeRangesThisWeek()"/>
+				<mx:LinkButton  label="Yesterday" fontSize="12" color="black" fontWeight="normal" click="QuicktimeRangesYesterday()"/>	
+				<mx:LinkButton  label="Today" fontSize="12" color="black" fontWeight="normal" click="application1_creationCompleteHandler()"/>
+				<mx:DateField id="dateField1"  text="{application1_creationCompleteHandler()}" yearNavigationEnabled="false" change="dateChanged(DateField(event.target).selectedDate)"/>
+			</mx:HBox>
+		</mx:HBox>
+		<mx:HRule width="100%" height="1"/>
+		<mx:HBox borderStyle="solid" height="100%" width="100%">  
+			<mx:HBox backgroundColor="#C1F2FE" width="200" height="100%">
+				<mx:VBox verticalGap="40">
+					<mx:LinkButton paddingTop="20" x="30" y="55" label="Subscribers" fontSize="20" color="black" fontWeight="normal" click="Subscribers()"/>
+					<mx:LinkButton paddingTop="20" x="30" y="55" label="API Calls" fontSize="20" color="black" fontWeight="normal" click=""/>
+					<mx:LinkButton paddingTop="20" x="30" y="55" label="API Status" fontSize="20" color="black" fontWeight="normal" click=""/>
+					<mx:LinkButton paddingTop="20" x="30" y="55" label="Threshold API" fontSize="20" color="black" fontWeight="normal" click=""/>
+					<mx:LinkButton paddingTop="20" x="30" y="55" label="Error Response" fontSize="20" color="black" fontWeight="normal" click=""/>
+				</mx:VBox>
+			</mx:HBox>
+			<mx:VBox horizontalAlign="left" height="100%" width="100%" verticalAlign="middle">
+				<s:Label text="Line Chart Hourly Basis" fontSize="16" fontWeight="bold" paddingLeft="150" paddingBottom="50"/>
+				<mx:LineChart id="column"  width="100%" height="40%" showDataTips="true" dataProvider="{medalsAC}"> 
+                                 
+					<mx:horizontalAxis>
+						<mx:CategoryAxis categoryField="Time" title="Time" />	
+					</mx:horizontalAxis>					
+					<mx:series>		
+						<mx:LineSeries  xField="Time" yField="Gold" displayName="Values"   />
+					</mx:series>
+					
+				</mx:LineChart>    
+				<mx:Legend dataProvider="{column}"/>    
+			</mx:VBox>
+			
+			<mx:VBox horizontalAlign="center" height="100%" width="100%" verticalAlign="middle">
+				<mx:AdvancedDataGrid id="myADG" width="100%" height="100%" initialize="gc.refresh();">        
+					<mx:dataProvider>
+						<mx:GroupingCollection2 id="gc" source="{medalsAC}">
+						</mx:GroupingCollection2>
+					</mx:dataProvider>        
+				</mx:AdvancedDataGrid>
+			</mx:VBox>
+			
+		</mx:HBox>
+		
+		<mx:HBox height="55" width="100%" backgroundColor="#6BE7FD" paddingLeft="200"  paddingRight="20" paddingTop="5">
+			<mx:VBox>
+				<s:Label text="Subscriber" fontSize="20"/>
+				<s:TextInput text="5000" fontSize="16"   borderAlpha="0" borderVisible="false"  contentBackgroundAlpha="0" />
+			</mx:VBox>
+			<s:Spacer width="50" />
+			<mx:VBox>
+				<s:Label text="API Calls" fontSize="20"/>
+				<s:TextInput text="5000" fontSize="16"   borderAlpha="0" borderVisible="false"  contentBackgroundAlpha="0" />
+			</mx:VBox>
+			<s:Spacer width="50"/>
+			<mx:VBox>
+				<s:Label text="Success" fontSize="20"/>
+				<s:TextInput text="4500" fontSize="16"   borderAlpha="0" borderVisible="false" contentBackgroundAlpha="0" />
+			</mx:VBox>
+			<s:Spacer width="50"/>
+			<mx:VBox>
+				<s:Label text="Error" fontSize="20"/>
+				<s:TextInput text="500" fontSize="16"   borderAlpha="0" borderVisible="false" contentBackgroundAlpha="0" />
+			</mx:VBox>
+		</mx:HBox>
+		
+	</mx:VBox>
+	
+</s:Application>

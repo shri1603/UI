@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Script>
+		
+		import mx.controls.Alert;
+		import mx.core.Application;
+		import mx.utils.StringUtil;
+	
+	  private function submitButton_clickHandler(event:Event):void
+		{
+		// TODO Auto-generated method stub
+		if(StringUtil.trim(user.text) == "1" || StringUtil.trim(user.text).toLowerCase() == "root" )
+		{
+		if(StringUtil.trim(passwd.text) == "netweb12" || StringUtil.trim(passwd.text) == "1")
+		{
+		var obj : Object = new Object();
+		obj.user = user.text;
+		obj.pwd = passwd.text;
+		}
+		else 
+		{
+		errorMsg.text = "Please enter valid username and password.";
+		}					 
+		}
+		
+		else {
+		errorMsg.text =  "Please enter valid username and password.";
+		}
+		}
+		
+		protected function user_focusInHandler(event:Event):void
+		{
+		// TODO Auto-generated method stub
+		if(user.text == "User Name"){
+		user.text = "";	
+		}
+		}
+		
+		protected function user_focusOutHandler(event:FocusEvent):void
+		{
+		// TODO Auto-generated method stub
+		if(user.text == StringUtil.trim("")){
+		user.text = "User Name"
+		}
+		}
+		
+		protected function passwd_clickHandler(event:Event):void
+		{
+		// TODO Auto-generated method stub
+		if(passwd.text =="Password"){
+		passwd.text = "";
+		passwd.displayAsPassword = true;
+		}
+		}
+		
+		protected function passwd_focusOutHandler(event:FocusEvent):void
+		{
+		// TODO Auto-generated method stub
+		if(passwd.text == StringUtil.trim("")){
+		passwd.text = "Password";
+		passwd.displayAsPassword = false;
+		}
+		}	
+	</fx:Script>
+	
+		<mx:VBox  backgroundColor="#24373E" verticalAlign="middle" horizontalAlign="center"
+				  verticalScrollPolicy="off" horizontalScrollPolicy="off" height="100%" width="100%">
+			<mx:HBox>
+				<mx:Label id="Name" text="Data_Analytics" fontSize="20" color="White" fontSharpness="0.5"/>
+				</mx:HBox>
+			<mx:VBox width="300" horizontalAlign="right" height="100%">
+				<s:Spacer height="200"/>
+				
+				<mx:TextInput id="user" width="100%"  color="#909090" text="User Name" focusIn="user_focusInHandler(event)" focusOut="user_focusOutHandler(event)"/>
+				<mx:TextInput id="passwd" width="100%"  color="#909090" text="Password"  focusIn="passwd_clickHandler(event)" focusOut="passwd_focusOutHandler(event)" enter="submitButton_clickHandler(event)"/>
+				<mx:Button label="Sign in" cornerRadius="5" width="80" click="submitButton_clickHandler(event)"  styleName="loginButton"
+						   useHandCursor="true" buttonMode="true" mouseChildren="true"/>
+				<mx:Text id="errorMsg" text="" color="red"/>
+			</mx:VBox>
+		</mx:VBox>
+</s:Application>
+
+

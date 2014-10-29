@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index>
+	<title>Source of CSID_UI</title>
+	<nodes>
+		<node label="html-template">
+			<node label="history">
+				<node icon="cssIcon" label="history.css" url="source/html-template/history/history.css.html"/>
+				<node label="history.js" url="source/html-template/history/history.js.txt"/>
+				<node icon="htmlIcon" label="historyFrame.html" url="source/html-template/history/historyFrame.html"/>
+			</node>
+			<node icon="htmlIcon" label="index.template.html" url="source/html-template/index.template.html"/>
+			<node icon="swfIcon" label="playerProductInstall.swf" url="source/html-template/playerProductInstall.swf"/>
+			<node label="swfobject.js" url="source/html-template/swfobject.js.txt"/>
+		</node>
+		<node label="libs">
+		</node>
+		<node label="src">
+			<node label="model">
+			</node>
+			<node icon="mxmlAppIcon" selected="true" label="CSID_UI.mxml" url="source/CSID_UI.mxml.html"/>
+		</node>
+		<node icon="htmlIcon" label="index.html" url="source/index.html"/>
+		<node icon="swfIcon" label="playerProductInstall.swf" url="source/playerProductInstall.swf"/>
+	</nodes>
+	<zipfile label="Download source (ZIP, 24K)" url="CSID_UI.zip">
+	</zipfile>
+	<sdklink label="Download Flex SDK" url="http://www.adobe.com/go/flex451_sdk_download">
+	</sdklink>
+</index>
